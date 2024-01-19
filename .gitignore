@@ -1,6 +1,5 @@
 # Byte-compiled / optimized / DLL files
-/ChessAI/__pycache__/
-/TicTacToe_AI/__pycache__/
+__pycache__/
 *.py[cod]
 *$py.class
 
