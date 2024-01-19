@@ -22,7 +22,7 @@ This will be called exactly once in the main.
 def loadImages():
     pieces = ["wp","wR","wN","wB","wK","wQ","bp","bR","bN","bB","bK","bQ"]
     for piece in pieces:
-        IMAGES[piece] = p.transform.scale(p.image.load("Chess_AI/images/" + piece + ".png"), (SQ_SIZE, SQ_SIZE))
+        IMAGES[piece] = p.transform.scale(p.image.load("images/" + piece + ".png"), (SQ_SIZE, SQ_SIZE))
     # Note: we can access an image by saying 'IMAGES['wp']'
 """
 Draw a starting screen to ask the user if they want to play against the AI or another human.
@@ -30,7 +30,7 @@ Draw a starting screen to ask the user if they want to play against the AI or an
 def drawStartingScreen(screen):
     global colors
     colors = [p.Color("white"), p.Color("dark green")]
-    starting_image = p.image.load("Chess_AI/images/startingScreen.jpeg")
+    starting_image = p.image.load("images/startingScreen.jpeg")
     starting_image = p.transform.scale(starting_image, (WIDTH + MOVE_LOG_PANEL_WIDTH, HEIGHT))
     screen.blit(starting_image, (0, 0))
     font = p.font.SysFont("Arial", 34, True, False)
