@@ -82,6 +82,7 @@ def main():
     sqSelected = () # No square is selected initially, this will keep track of the last click of the user (tuple: (row, col)).
     playerClicks = [] # Keep track of player clicks (two tuples: [(6,4), (4,4)])
     gameOver = False
+    remis = False
     restart = False
     playerOne = True # If a human is playing white, then this will be True. If an AI is playing, then False.
     playerTwo = drawStartingScreen(screen) # Same as above but for black.
@@ -108,6 +109,7 @@ def main():
                         for i in range(len(validMoves)):
                             if move == validMoves[i]:
                                 gs.makeMove(validMoves[i])
+                                remis = gs.checkRemis(validMoves[i])
                                 moveMade = True
                                 animate = True
                                 sqSelected = ()
@@ -145,6 +147,7 @@ def main():
             if AIMove is None:
                 AIMove = ChessAI.findRandomMove(validMoves)
             gs.makeMove(AIMove)
+            remis = gs.checkRemis(AIMove)
             moveMade = True
             animate = True
         if moveMade:
@@ -153,18 +156,12 @@ def main():
             validMoves = gs.getValidMoves()
             moveMade = False
         drawGameState(screen, gs, validMoves, sqSelected, moveLogFont)
-        if gs.checkMate or gs.staleMate:
+        if gs.checkMate or gs.staleMate or remis:
             gameOver = True
-            text = 'Stalemate' if gs.staleMate else 'Black wins by checkmate' if gs.whiteToMove else 'White wins by checkmate'
-            restart = 'Press "r" to restart'
+            text = 'Stalemate' if gs.staleMate or remis else 'Black wins by checkmate' if gs.whiteToMove else 'White wins by checkmate'
+            restartText = 'Press "r" to restart'
             drawEndGameText(screen, text, 250)
-            drawEndGameText(screen, restart, 300)
-        if gs.remis == 50:
-            gameOver = True
-            text = 'Remis'
-            restart = 'Press "r" to restart'
-            drawEndGameText(screen, text, 250)
-            drawEndGameText(screen, restart, 300)
+            drawEndGameText(screen, restartText, 300)
         restart = False
         clock.tick(MAX_FPS)
         p.display.flip()

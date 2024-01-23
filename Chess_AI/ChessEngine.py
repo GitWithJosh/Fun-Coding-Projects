@@ -71,14 +71,7 @@ class GameState():
         self.updateCastleRights(move)
         self.castleRightsLog.append(CastleRights(self.currentCastlingRights.wks, self.currentCastlingRights.bks,
                                                 self.currentCastlingRights.wqs, self.currentCastlingRights.bqs))
-        # Check if move is remis (50 move rule)
-        if self.moveLog[-1].isCapture or move.pieceMoved[1] == 'p':
-            self.remis = 0
-        else:
-            self.remis += 1
-        # Check if move is remis (threefold repetition)
-        pass
-        
+
     def undoMove(self):
         if len(self.moveLog) != 0:
             move = self.moveLog.pop()
@@ -111,6 +104,7 @@ class GameState():
             # Undo checkmate and stalemate
             self.checkMate = False
             self.staleMate = False
+    
     def updateCastleRights(self, move):
         if move.pieceMoved == 'wK':
             self.currentCastlingRights.wks = False
@@ -186,6 +180,18 @@ class GameState():
             if move.endRow == r and move.endCol == c:
                 return True
         return False
+    def checkRemis(self, lastMove):
+        # Check if the last move was a pawn move or a capture, if so, reset the remis counter
+        if lastMove.pieceMoved[1] == 'p' or lastMove.isCapture:
+            self.remis = 0
+        else:
+            self.remis += 1
+        # Check if the board position has been repeated 3 times, if so, set the remis flag
+        if len(self.moveLog) >= 10 and (self.moveLog[-1] == self.moveLog[-5] == self.moveLog[-9] and self.moveLog[-2] == self.moveLog[-6] == self.moveLog[-10]):
+            return True
+        # Check if the remis counter is greater than 50, if so, set the remis flag
+        if self.remis >= 50:
+            return True
     def getAllPossibleMoves(self):
         moves = []
         for r in range(len(self.board)):
