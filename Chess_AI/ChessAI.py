@@ -98,7 +98,7 @@ def findBestMove(gs, validMoves):
             elif gs.staleMate:
                 score = STALEMATE
             else:
-                score = -turnMultiplier * scoreMaterial(gs.board)
+                score = -turnMultiplier * scoreBoard(gs.board)
             if score > opponentMaxScore:
                 opponentMaxScore = score
             gs.undoMove()
@@ -119,7 +119,7 @@ def findBestMoveMinMax(gs, validMoves):
 def findMoveMinMax(gs, validMoves, depth, whiteToMove):
     global nextMove
     if depth == 0:
-        return scoreMaterial(gs.board)
+        return scoreBoard(gs.board)
     if whiteToMove:
         maxScore = -CHECKMATE
         for move in validMoves:
