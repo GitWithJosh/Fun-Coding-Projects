@@ -223,8 +223,8 @@ def drawMoveLog(screen, gs, font):
         if i+1 < len(moveLog):
             moveString += str(moveLog[i+1]) + " "
         moveTexts.append(moveString)
-        if len(moveTexts) > 30:
-            moveTexts = moveTexts[:1] + moveTexts[-29:]
+        if len(moveTexts) > 28:
+            moveTexts = moveTexts[:1] + moveTexts[-27:]
     movesPerRow = 1
     padding = 5
     lineSpacing = 1
