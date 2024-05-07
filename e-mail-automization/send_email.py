@@ -12,8 +12,9 @@ load_dotenv(dotenv_path)
 
 MAIL = os.environ.get("MAIL")
 PASS = os.environ.get("PASS")
+API_KEY = os.environ.get("API_KEY")
 
-genai.configure(api_key='AIzaSyAsYYmxA_AIWNKcbBn1dWBKIr-kY4eX5pQ')
+genai.configure(api_key=API_KEY)
 model = genai.GenerativeModel('gemini-pro')
 
 
